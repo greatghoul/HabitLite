@@ -1,0 +1,55 @@
+body {
+  width: 400px;
+  height: 400px;
+  font-size: 14px;
+  color: #333;
+}
+
+#app {
+  position: relative;
+  height: 100%;
+}
+
+.main {
+  position: absolute;
+  bottom: 58px;
+  left: 0;
+  right: 0;
+  top: 0;
+  background: lightblue;
+}
+
+.footer {
+  position: absolute;
+  display: flex;
+  height: 50px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.footer .left {
+  flex: 1 100px;
+  margin-right: 8px;
+}
+
+.footer .right {
+  width: 80px;
+}
+
+.footer textarea,
+.footer button {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+}
+
+.footer textarea {
+  font-size: 1em;
+}
+
+.footer button {
+  font-size: 1.5em;
+  color: #333;
+}

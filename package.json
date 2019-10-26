@@ -1,0 +1,11 @@
+{
+  "name": "HabitRPG Lite",
+  "private": true,
+  "standard": {
+    "globals": [
+      "chrome",
+      "Ractive",
+      "lscache"
+    ]
+  }
+}

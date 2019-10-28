@@ -1,6 +1,5 @@
 body {
   width: 400px;
-  height: 400px;
   font-size: 14px;
   color: #333;
 }
@@ -10,13 +9,23 @@ body {
   height: 100%;
 }
 
+.loading {
+  height: 100px;
+  line-height: 100px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: #999;
+}
+
 .main {
   position: absolute;
   bottom: 58px;
   left: 0;
   right: 0;
   top: 0;
-  background: lightblue;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .footer {
@@ -52,4 +61,25 @@ body {
 .footer button {
   font-size: 1.5em;
   color: #333;
+}
+
+.message {
+  border-bottom: 1px solid #eeeeee;
+  padding: 10px 5px;
+}
+
+.message .meta > span {
+  margin-right: 10px;
+}
+
+.text-muted {
+  color: #cccccc;
+}
+
+code {
+  color: #981e61;
+}
+
+.message img {
+  max-width: 100%;
 }

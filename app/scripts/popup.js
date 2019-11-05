@@ -1,40 +1,53 @@
-const md = window.markdownit()
-
-const API_URL_BASE = 'https://habitica.com/api/v3'
-
-const HEADERS = {
-  'x-api-key': '',
-  'x-api-user': ''
-}
-
-const urlFor = endpoint => {
-  return `${API_URL_BASE}${endpoint}`
-}
-
 Ractive({
   target: '#app',
 
   template: `
     <div>
       {{#if auth}}
-        <main />
+        <main auth="{{auth}}" />
       {{else}}
-        <loading />
+        <loading failed="{{failed}}" />
       {{/if}}
     </div>
   `,
 
   data: {
-    auth: null
+    auth: null,
+    failed: false
   },
 
   on: {
     init () {
-      this.fetchAuth()
+      const auth = this.getAuth()
+      if (auth) {
+        this.set('auth', auth)
+      } else {
+        this.fetchAuth()
+      }
+    }
+  },
+
+  getAuth () {
+    const apiId = window.localStorage.apiId
+    const apiToken = window.localStorage.apiToken
+
+    if (apiId && apiToken) {
+      return {
+        apiId: window.localStorage.apiId,
+        apiToken: window.localStorage.apiToken
+      }
+    } else {
+      return null
     }
   },
 
   fetchAuth () {
-    console.log('Fetching auth info')
+    chrome.runtime.sendMessage({ action: 'fetch-auth' }, resp => {
+      if (resp.success) {
+        this.set('auth', resp.auth)
+      } else {
+        this.set('failed', true)
+      }
+    })
   }
 })

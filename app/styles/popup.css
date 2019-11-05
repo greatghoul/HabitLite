@@ -2,11 +2,7 @@ body {
   width: 400px;
   font-size: 14px;
   color: #333;
-}
-
-#app {
-  position: relative;
-  height: 100%;
+  background: #f3f3f3;
 }
 
 .loading {
@@ -18,7 +14,13 @@ body {
   color: #999;
 }
 
+.party {
+  height: 400px;
+  position: relative;
+}
+
 .main {
+  background: #fff;
   position: absolute;
   bottom: 58px;
   left: 0;
@@ -29,6 +31,7 @@ body {
 }
 
 .footer {
+  background: #fff;
   position: absolute;
   display: flex;
   height: 50px;

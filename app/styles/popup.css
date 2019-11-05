@@ -86,3 +86,21 @@ code {
 .message img {
   max-width: 100%;
 }
+
+.message blockquote {
+  padding: 2px 2px 2px 8px;
+  margin: 0.5em 0 1em 0;
+  border-left: 5px solid #e4e4e4;
+}
+
+.message pre {
+  background: #ededed;
+  padding: 8px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+}
+
+.message p {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}

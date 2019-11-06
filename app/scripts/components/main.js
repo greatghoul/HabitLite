@@ -1,5 +1,5 @@
+const { _ } = window
 const md = window.markdownit()
-
 const API_URL_BASE = 'https://habitica.com/api/v3'
 const KEY_FOR_PARTY_MESSAGES = 'messages:party:v1'
 
@@ -23,10 +23,10 @@ Ractive.components.main = Ractive.extend({
       </div>
       <div class="footer">
         <div class="left">
-          <textarea></textarea>
+          <textarea value="{{message}}"></textarea>
         </div>
         <div class="right">
-          <button>SEND</button>
+          <button on-click="messagePost">SEND</button>
         </div>
       </div>
     </div>
@@ -35,6 +35,7 @@ Ractive.components.main = Ractive.extend({
   data () {
     return {
       auth: null,
+      message: null,
       messages: [],
       renderUsername (message) {
         if (message.uuid === 'system') {
@@ -56,6 +57,8 @@ Ractive.components.main = Ractive.extend({
     const auth = this.get('auth')
     return window.fetch(`${API_URL_BASE}${url}`, {
       headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
         'x-api-user': auth.apiId,
         'x-api-key': auth.apiToken
       },
@@ -78,6 +81,23 @@ Ractive.components.main = Ractive.extend({
       })
   },
 
+  postMessage () {
+    const text = _.trim(this.get('message'))
+    if (!text) return
+
+    const data = JSON.stringify({ message: text })
+    this.apiRequest('/groups/party/chat', { method: 'POST', body: data })
+      .then(res => res.json())
+      .then(data => {
+        this.set('message', null)
+        const message = data.data.message
+        const messages = _.concat(this.get('messages'), message)
+        lscache.set(KEY_FOR_PARTY_MESSAGES, messages)
+        this.push('messages', message)
+        this.fire('messagesReady')
+      })
+  },
+
   renderMessages (messages) {
     this.set('messages', messages)
     this.fire('messagesReady')
@@ -90,6 +110,9 @@ Ractive.components.main = Ractive.extend({
     messagesReady () {
       const message = document.querySelector('.messages').lastChild
       message && message.scrollIntoView()
+    },
+    messagePost () {
+      this.postMessage()
     }
   }
 })

@@ -1,7 +1,21 @@
 const { _ } = window
-const md = window.markdownit()
+const md = window.markdownit({ linkify: true })
 const API_URL_BASE = 'https://habitica.com/api/v3'
+const APP_URL_BASE = 'https://habitica.com'
 const KEY_FOR_PARTY_MESSAGES = 'messages:party:v1'
+
+document.addEventListener('click', e => {
+  const target = e.target
+  if (target.matches('.message .body a')) {
+    e.preventDefault()
+    const url = target.getAttribute('href')
+    if (/^https?:\/\/.*/i.test(url)) {
+      chrome.tabs.create({ url, active: false })
+    } else if (/\/profile\/.*/i.test(url)) {
+      chrome.tabs.create({ url: `${APP_URL_BASE}${url}`, active: false })
+    }
+  }
+})
 
 Ractive.components.main = Ractive.extend({
   template: `
